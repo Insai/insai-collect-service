@@ -14,16 +14,16 @@ collections.get("/list/:accessToken", (req, res) => {
     .getData(accessToken)
     .then(data => {
       // sync pocket list with mongodb
-      const keys = Object.keys(data.list);
-      const items = keys.map(key => data.list[key]);
-      db.syncPocketList(items);
+      // const keys = Object.keys(data.list);
+      // const items = keys.map(key => data.list[key]);
+      // db.syncPocketList(items);
 
       return res.json(data);
     })
     .catch(err => res.json(err));
 });
 
-collect.post("/list", (req, res) => {
+collections.post("/list", (req, res) => {
   const { title, url, accessToken } = req.body;
   pocketData
     .saveItem(accessToken, title, url)

@@ -1,8 +1,8 @@
 const fetch = require("node-fetch");
+require("dotenv").config();
 
 // Pocket request variables
-const CONSUMER_KEY = "77971-769a3aeb9fa7c467203a8474";
-const URI = "http://localhost:3000";
+const { CONSUMER_KEY, URI } = process.env;
 
 /**
  * Pocket Authentication
@@ -17,16 +17,13 @@ const requestToken = () => {
   return fetch("https://getpocket.com/v3/oauth/request", {
     method: "POST",
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "x-accept": "application/json"
     },
     body: JSON.stringify(data)
   })
-    .then(res => res.text())
-    .then(data => {
-      // remove "code="
-      const token = data.slice("code=".length);
-      return token;
-    })
+    .then(res => res.json())
+    .then(data => data.code)
     .catch(err => console.log(err));
 };
 

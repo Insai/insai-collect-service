@@ -1,5 +1,7 @@
 const fetch = require("node-fetch");
+require("dotenv").config();
 
+const { CONSUMER_KEY } = process.env;
 // Retrieve a user's pocket data
 exports.getData = accessToken => {
   const data = {
