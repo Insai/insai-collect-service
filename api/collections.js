@@ -1,6 +1,7 @@
 const express = require("express");
-const pocketAuth = require("../utils/pocket-auth");
-const pocketData = require("../utils/pocket-data");
+const pocketAuth = require("../lib/pocket-auth");
+const pocketData = require("../lib/pocket-data");
+const db = require("../lib/mongo-utils");
 
 /**
  * Collections API
@@ -14,9 +15,9 @@ collections.get("/list/:accessToken", (req, res) => {
     .getData(accessToken)
     .then(data => {
       // sync pocket list with mongodb
-      // const keys = Object.keys(data.list);
-      // const items = keys.map(key => data.list[key]);
-      // db.syncPocketList(items);
+      const keys = Object.keys(data.list);
+      const items = keys.map(key => data.list[key]);
+      db.syncPocketList(items);
 
       return res.json(data);
     })
